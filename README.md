@@ -6,7 +6,7 @@ Lost and Found is Telegram Bot created for the purpose of Lost Items in my unive
 
 ```bash
 Open Telegram Web/ Desktop
-Search for @
+Search for @lococompanybot
 ```
 
 ## Features
