@@ -13,12 +13,12 @@ function Callbacks(contents) {
     case "found":
     case "lost":
       Bot.editText(id, msg_id, message.FoundLost, Inline().item);
-      return CatchStatus(id, msg_id, dota);
+      return CatchStatus(id, dota);
 
     case "ID":
     case "ATM":
     case "ITEM":
-      return Step1(dota, id, msg_id, message);
+      return Step1(dota, id, message);
 
     case "exit":
       return Bot.editText(id, msg_id, message.Welcome, Inline().setup);

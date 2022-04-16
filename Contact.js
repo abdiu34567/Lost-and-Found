@@ -1,21 +1,19 @@
 function Contact(contents) {
   const textcontent = TextContents(contents);
   const id = textcontent.Id;
-  const msg_id = textcontent.MsgId;
   var contact = contents.message.contact.phone_number;
 
-  return SaveContact(id, msg_id, contact);
+  return SaveContact(id, contact);
 }
 
-function SaveContact(id, msg_id, contact) {
+function SaveContact(id, contact) {
   const data = Api().catches;
   var catched = data.get(id);
   var catchobj = JSON.parse(catched);
 
-  if (catchobj["State"] != "phone") {
+  if (catchobj["State"] != "phone")
     //check if state or catch is Ok, then exit
     return Bot.sendText(id, Message().Welcome, Inline().setup);
-  }
 
   var item =
     catchobj["Item"] == "ID"

@@ -7,17 +7,13 @@ function SavePhoto(contents) {
   const data = Api().catches;
   var catched = data.get(id);
   var obj = JSON.parse(catched);
-  var msg_id = textcontent.MsgId;
 
   //if no catch then delete photo
-  if (obj["State"] != "photo") {
-    Bot.deleteText(id, msg_id);
+  if (obj["State"] != "photo")
     return Bot.sendText(id, Message().Welcome, Inline().setup);
-  }
 
   Bot.sendText(id, PhotoSave().PhotoSave, Reply().phoneshare);
 
-  obj["Msg_id"] = msg_id + 1;
   obj["Image"] = photo;
   obj["State"] = "phone";
   obj = JSON.stringify(obj);

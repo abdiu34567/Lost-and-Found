@@ -1,5 +1,4 @@
 function Step1(dota, id, msg_id, message) {
-  //#Updated
   const data = Api().catches;
   var catched = data.get(id);
 
@@ -24,7 +23,6 @@ function Step1(dota, id, msg_id, message) {
 }
 
 function Step2(id, text, catched, msg_id) {
-  //#Updated
   var data = catched.get(id);
 
   var obj = JSON.parse(data);

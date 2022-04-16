@@ -11,10 +11,10 @@ function TextManager(contents) {
       return null;
 
     case "💫 RESTART":
-      return Restart(id, messageId);
+      return Restart(id);
 
     case "➡️ NEXT":
-      return EscapePhoto(id, messageId);
+      return EscapePhoto(id);
 
     default:
       const catchdata = Api().catches;
@@ -25,16 +25,17 @@ function TextManager(contents) {
           case "ID":
           case "ATM":
           case "ITEM":
-            return Step2(id, text, catchdata, messageId);
+            return Step2(id, text, catchdata);
 
           case "phone":
             if (Number(text) && text.length < 14) {
-              return SaveContact(id, messageId, text);
+              return SaveContact(id, text);
             }
             return null; //if catch exist and the input not satistfied the condition , it does not need to redirect home
 
-          default:
-            return Bot.sendText(id, Message().Welcome, Inline().setup); //if no catch
+          default: //if no catch
+            return Bot.sendText(id, Message().Welcome, Inline().setup);
+            break;
         }
       }
       return Bot.sendText(id, Message().Welcome, Inline().setup); //if no catch
