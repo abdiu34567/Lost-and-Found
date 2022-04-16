@@ -4,14 +4,14 @@
 
 ## Usage
 
-```bash
+```javascript
 Open Telegram Web/ Desktop
 Search for @lococompanybot
 ```
 
 ## Features
 
-```bash
+```Javascript
 # The Bot uses Catch Storage to store Temporary data
 # User Friendly Registration of any Items
 # Searching Items in a great Capacity
