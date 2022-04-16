@@ -3,39 +3,24 @@ function SavePhoto(contents) {
 
   const textcontent = TextContents(contents);
   const id = textcontent.Id;
-  const text = textcontent.Text;
-  const messageId = textcontent.MsgId;
-  const status = Status(id);
-  var type = status.Col3.getValue();
 
-  if (status.Col1.getValue() != "photo") return Bot.deleteText(id, messageId);
+  const data = Api().catches;
+  var catched = data.get(id);
+  var obj = JSON.parse(catched);
+  var msg_id = textcontent.MsgId;
 
-  var dataobj = PasreIdObject(id, type);
-  var obj = dataobj.Toparse;
-  var date = new Date();
-  var msg_id = status.Col2.getValue();
-
-  if (type == "ID") var item = obj["ID"];
-  else if (type == "ATM") var item = obj["ATM"];
-  else var item = obj["ITEM"];
-
-  try {
+  //if no catch then delete photo
+  if (obj["State"] != "photo") {
     Bot.deleteText(id, msg_id);
-    Bot.deleteText(id, messageId);
-  } catch (err) {}
+    return Bot.sendText(id, Message().Welcome, Inline().setup);
+  }
 
-  Bot.sendText(
-    id,
-    Message_PhotoSave(type, obj, dataobj, item, date, photo).PhotoSave,
-    Reply().phoneshare
-  );
+  Bot.sendText(id, PhotoSave().PhotoSave, Reply().phoneshare);
 
+  obj["Msg_id"] = msg_id + 1;
   obj["Image"] = photo;
-  obj = JSON.stringify(obj, undefined, 1);
-  dataobj.DataTable.setValue(obj);
-
-  status.Col2.setValue(messageId + 1);
-  status.Col1.setValue("phone");
-  status.Col4.setValue("ok");
-  return Bot.sendPhoto(Admins().DataBase, photo);
+  obj["State"] = "phone";
+  obj = JSON.stringify(obj);
+  data.put(id, obj, 1200); //catch expire after 10 minute
+  return null;
 }

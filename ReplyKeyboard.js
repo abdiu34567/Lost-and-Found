@@ -3,7 +3,10 @@ function Reply() {
     phoneshare: {
       //Reply keyboard
       keyboard: [
-        [{ text: "📡 Share Contact From Telegram", request_contact: true }],
+        [
+          { text: "☎️ Share Contact ", request_contact: true },
+          { text: "💫 RESTART" },
+        ],
       ],
       one_time_keyboard: true,
       resize_keyboard: true,
@@ -11,6 +14,18 @@ function Reply() {
     exit: {
       //Reply keyboard
       keyboard: [[{ text: "❌ Exit" }]],
+      one_time_keyboard: true,
+      resize_keyboard: true,
+    },
+    next: {
+      //Reply keyboard
+      keyboard: [[{ text: "➡️ NEXT" }, { text: "💫 RESTART" }]],
+      one_time_keyboard: true,
+      resize_keyboard: true,
+    },
+    restart: {
+      //Reply keyboard
+      keyboard: [[{ text: "💫 RESTART" }]],
       one_time_keyboard: true,
       resize_keyboard: true,
     },

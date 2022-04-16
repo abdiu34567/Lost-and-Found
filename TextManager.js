@@ -6,60 +6,37 @@ function TextManager(contents) {
 
   switch (text) {
     case "/start":
-      try {
-        Bot.deleteText(id, messageId);
-      } catch (err) {}
-      Bot.sendText(id, Message().Welcome, Inline().setup);
-      return OneTimeRegisterId(id);
-
     case "❌ Exit":
-    case "#Exit":
-    case "#exit":
-    case "Exit":
-    case "exit":
-      const data = Status(id);
-      const msg_id = data.Col2.getValue();
+      Bot.sendText(id, Message().Welcome, Inline().setup);
+      return null;
 
-      try {
-        Bot.deleteText(id, messageId); // processing text
-        Bot.deleteText(id, msg_id); //saved data
-        Bot.deletereplykeyboard(id, "✅ Processing--");
-        Bot.deleteText(id, messageId + 1); // exit text
-      } catch (err) {}
-      return Bot.sendText(id, Message().Welcome, Inline().setup);
+    case "💫 RESTART":
+      return Restart(id, messageId);
 
-    case "#Back":
-    case "#back":
-    case "Back":
-    case "back":
-      try {
-        Bot.deleteText(id, messageId);
-      } catch (err) {}
-      Back(id, messageId);
-      return Status(id).Col1.setValue("");
-
-    case "#next":
-    case "#Next":
-    case "next":
-    case "Next":
-      return Next(id, text, messageId);
+    case "➡️ NEXT":
+      return EscapePhoto(id, messageId);
 
     default:
-      const status = Status(id).Col1.getValue();
-      switch (status) {
-        case "ID":
-        case "ATM":
-        case "ITEM":
-          return SaveItem(id, text, messageId, status);
+      const catchdata = Api().catches;
+      var catched = catchdata.get(id);
+      if (catched != null) {
+        var obj = JSON.parse(catched);
+        switch (obj["State"]) {
+          case "ID":
+          case "ATM":
+          case "ITEM":
+            return Step2(id, text, catchdata, messageId);
 
-        default:
-          if (Number(text) && status == "phone" && text.length < 14) {
-            return SaveContact(contents, (state = "type"));
-          } else if (text.includes("{")) {
-            return null;
-          }
-          return Bot.deleteText(id, messageId);
-          break;
+          case "phone":
+            if (Number(text) && text.length < 14) {
+              return SaveContact(id, messageId, text);
+            }
+            return null; //if catch exist and the input not satistfied the condition , it does not need to redirect home
+
+          default:
+            return Bot.sendText(id, Message().Welcome, Inline().setup); //if no catch
+        }
       }
+      return Bot.sendText(id, Message().Welcome, Inline().setup); //if no catch
   }
 }

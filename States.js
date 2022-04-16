@@ -1,40 +1,42 @@
-// find message Id to edit for , edit status to null
-function Back(id, messageId) {
-  const data = Status(id);
-  const msg_id = data.Col2.getValue();
-  Bot.editText(id, msg_id, Message().FoundLost, Inline().item);
-  return data.Col1.setValue("");
+function Restart(id, msg_id) {
+  const data = Api().catches;
+  var catched = data.get(id);
+  var message = Message();
+
+  if (catched == null) return Bot.sendText(id, message.Welcome, Inline().setup);
+  var obj = JSON.parse(catched);
+
+  return Bot.sendText(id, message.FoundLost, Inline().item);
 }
 
-// exit if id/atm/other are already registered
-function Next(id, text, messageId) {
-  const api = Status(id);
-  const status = api.Col3.getValue();
-  const msg_id = api.Col2.getValue();
+function EscapePhoto(id, msg_id) {
+  const data = Api().catches;
+  var catched = data.get(id);
+  var obj = JSON.parse(catched);
 
-  const dataobj = PasreIdObject(id, status);
-  var obj = dataobj.Toparse;
-  var date = new Date();
+  //if no catch then delete photo
+  if (obj["State"] != "photo")
+    return Bot.sendText(id, Message().Welcome, Inline().setup);
 
-  if (!obj[dataobj.Type]) return Bot.deleteText(id, messageId);
+  Bot.sendText(id, NoPhoto().PhotoSave, Reply().phoneshare);
+  obj["State"] = "phone";
+  obj = JSON.stringify(obj);
+  data.put(id, obj, 1200); //catch expire after 10 minute
+  return null;
+}
 
-  try {
-    Bot.deleteText(id, msg_id);
-    Bot.deleteText(id, messageId);
-  } catch (err) {}
+function CatchStatus(id, msg_id, dota) {
+  const data = Api().catches.get(id);
 
-  if (status == "ID") var item = obj["ID"];
-  else if (status == "ATM") var item = obj["ATM"];
-  else var item = obj["ITEM"];
+  if (data != null) {
+    var obj = JSON.parse(data);
+  } // if catch available
+  else {
+    var obj = new Object();
+  }
 
-  Bot.sendText(
-    id,
-    Message_Next(status, obj, item, date).Next,
-    Reply().phoneshare
-  );
-
-  api.Col1.setValue("phone");
-  api.Col4.setValue("none");
-  api.Col2.setValue(messageId + 1);
+  obj["Status"] = dota;
+  obj = JSON.stringify(obj);
+  Api().catches.put(id, obj, 1200); //catch expire after 10 minute
   return null;
 }

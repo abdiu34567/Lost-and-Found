@@ -13,12 +13,12 @@ function Callbacks(contents) {
     case "found":
     case "lost":
       Bot.editText(id, msg_id, message.FoundLost, Inline().item);
-      return Status(id).Col1.setValue(dota);
+      return CatchStatus(id, msg_id, dota);
 
     case "ID":
     case "ATM":
-    case "OTHER":
-      return Ask(dota, id, msg_id);
+    case "ITEM":
+      return Step1(dota, id, msg_id, message);
 
     case "exit":
       return Bot.editText(id, msg_id, message.Welcome, Inline().setup);
@@ -36,7 +36,7 @@ function Callbacks(contents) {
       return Profile(id, msg_id);
 
     case "delete":
-      return DeleteData(id);
+      return DeleteData(id, msg_id);
 
     default:
       return ConfirmtoChannel(id, dota, contents);

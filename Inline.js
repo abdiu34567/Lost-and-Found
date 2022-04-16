@@ -2,12 +2,12 @@ function MyInline(contents) {
   const inline = InlineContents(contents);
   const id = inline.Id;
   const query = inline.Query;
-  const api = Api(id);
-  var title = "Result Found";
 
+  var table = Table();
+  var title = "Result Found";
   var data = [];
   if (query) {
-    var find = api.DataTable.createTextFinder(query).findAll();
+    var find = table.DataTable.createTextFinder(query).findAll();
     var result = find.map((r) => ({
       value: r.getValue(),
       row: r.getRow(),
@@ -28,26 +28,7 @@ function MyInline(contents) {
         }
 
         var toprse = JSON.parse(result[i].value);
-        // if (toprse['Image']) {
-        //   var fileId = toprse['Image'];
-        //   var link = UrlFetchApp.fetch(`https://api.telegram.org/bot1203348020:AAEZ2JIynxiq88r_TXmhS_mpcjhVgvU-RRE/getFile?file_id=${fileId}`);
-        //   var photoUrl = JSON.parse(link).result.file_path;
-        //   var photo = `https://api.telegram.org/file/bot1203348020:AAEZ2JIynxiq88r_TXmhS_mpcjhVgvU-RRE/${photoUrl}`;
 
-        //   Bot.sendText(id, photo);
-        //   data.push(
-        //     {
-        //       type: "photo",
-        //       id: i,
-        //       photo_url: photo,
-        //       thumb_url: photo,
-        //       title: `✅ ${title}, Click To Display`,
-        //       description: `${JSON.stringify(toprse, undefined, 1)}`,
-
-        //     })
-
-        // }
-        // else {
         data.push({
           type: "article",
           id: i,
@@ -58,10 +39,13 @@ function MyInline(contents) {
           },
           description: `\n-----------------------------------\n   ${item}: ${toprse[items]}\n   🧭 Date: ${toprse["Time"]}\n   ☎️ Contact: ${toprse["Contact"]}`,
         });
-        // }
       }
     }
   }
 
-  return Bot.answerInlineQuery(inline.QueryId, data, `Type Something...`);
+  try {
+    return Bot.answerInlineQuery(inline.QueryId, data, `Type Something...`);
+  } catch (err) {
+    Bot.sendText(id, err);
+  }
 }
