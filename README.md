@@ -11,7 +11,7 @@ Search for @lococompanybot
 
 ## Features
 
-```bash
+```Javascript
 # Directly Calls From Database EveryTime
 # No Catch/Session stored
 # Searching Items in a great Capacity
@@ -19,7 +19,7 @@ Search for @lococompanybot
 
 ## version
 
-```bash
+```Javascript
 # OLD
 # v1.0.0
 ```
