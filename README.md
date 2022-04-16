@@ -6,20 +6,20 @@ Lost and Found is Telegram Bot created for the purpose of Lost Items in my unive
 
 ```bash
 Open Telegram Web/ Desktop
-Search for @
+Search for @lococompanybot
 ```
 
 ## Features
 
 ```bash
-# The Bot uses Catch Storage to store Temporary data
-# User Friendly Registration of any Items
+# Directly Calls From Database EveryTime
+# No Catch/Session stored
 # Searching Items in a great Capacity
 ```
 
 ## version
 
 ```bash
-# Latest
-# v1.0.1
+# OLD
+# v1.0.0
 ```
