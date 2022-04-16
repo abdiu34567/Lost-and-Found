@@ -2,9 +2,9 @@ function ConfirmtoChannel(id, dota, contents) {
   var split = dota.split("-");
   var col = split[2];
   var user = split[1];
-  var table = Table();
-  var row = table.UserTable.createTextFinder(id).findNext().getRow();
-  var data = table.DataTable.getCell(row, col).getValue();
+
+  var api = Api(user);
+  var data = api.DataTable.getCell(api.Row, col).getValue();
   var obj = JSON.parse(data);
 
   if (col == "4") {

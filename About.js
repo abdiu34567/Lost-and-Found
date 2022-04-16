@@ -11,10 +11,9 @@ function About() {
     bot: {
       Name: "LOST & FOUND",
       Version: "1.0.1",
-      WhatIsNew: `Catches To Speed Up && Bug Fix`,
+      WhatIsNew: `Everything Works Directly To The Database`,
       Description:
         "Where one Register found Id/ATM/- and the other find his/her lost Item",
-      Admins: "0941988502 / 0974498538",
     },
   };
 }

@@ -1,45 +1,61 @@
-function Step1(dota, id, msg_id, message) {
-  const data = Api().catches;
-  var catched = data.get(id);
+// Print ID/ATM/ITEM form -- Tested(updated)*
+function Ask(dota, id, msg_id) {
+  const api = Api(id);
+  const row = api.Row;
+  const statTable = api.ManagerTable;
+  const status = statTable.getCell(row, 1).getValue(); //find/lost
 
-  if (catched == null)
-    return Bot.sendText(id, Message().Welcome, Inline().setup);
+  var dataTable = api.DataTable;
+  var qesn = Questions();
 
-  var obj = JSON.parse(catched);
-  var qesn =
-    dota == "ID"
-      ? Questions().ID
-      : dota == "ATM"
-      ? Questions().ATM
-      : Questions().ITEM;
+  if (dota == "ID") qesn = qesn.ID;
+  else if (dota == "ATM") qesn = qesn.ATM;
+  else {
+    qesn = qesn.ITEM;
+    dota = "ITEM";
+  }
+  Bot.editText(id, msg_id, Message_Ask(dota, status, qesn).Ask);
 
-  Bot.sendText(id, Message_Ask(dota, qesn).Ask, Reply().restart);
+  dataTable = dataTable.getCell(row, qesn.Col);
 
-  obj["Item"] = dota;
-  obj["State"] = dota;
-  obj = JSON.stringify(obj);
-  data.put(id, obj, 1200); //catch expire after 10 minute
+  if (dataTable.getValue()) var obj = JSON.parse(dataTable.getValue());
+  else var obj = new Object();
+
+  obj["Status"] = status;
+  obj = JSON.stringify(obj, undefined, 1);
+  dataTable.setValue(obj);
+
+  statTable.getCell(row, 1).setValue(dota);
+  statTable.getCell(row, 2).setValue(msg_id);
+  statTable.getCell(row, 3).setValue(dota);
   return null;
 }
 
-function Step2(id, text, catched, msg_id) {
-  var data = catched.get(id);
+/* Saves Id/ATM/ITEM from user Input --- Tested */
+function SaveItem(id, text, messageId, status) {
+  const dataobj = PasreIdObject(id, status);
+  const statuss = Status(id);
 
-  var obj = JSON.parse(data);
-  var qesn =
-    obj["Item"] == "ID"
-      ? Questions().ID
-      : obj["Item"] == "ATM"
-      ? Questions().ATM
-      : Questions().ITEM;
-
-  Bot.sendText(id, Sendimage(qesn).SaveItem, Reply().next);
-
+  var obj = dataobj.Toparse;
   var date = new Date();
+  var msg_id = statuss.Col2.getValue();
+
+  Bot.editText(
+    id,
+    msg_id,
+    Message_SaveItem(status, obj, dataobj, text, date).SaveItem
+  );
+  try {
+    Bot.deleteText(id, messageId);
+  } catch (err) {}
+
+  if (status == "ID") obj["ID"] = text;
+  else if (status == "ATM") obj["ATM"] = text;
+  else obj["ITEM"] = text;
+
   obj["Time"] = date.toLocaleDateString("en-US");
-  obj[obj["Item"]] = text;
-  obj["State"] = "photo";
-  obj = JSON.stringify(obj);
-  catched.put(id, obj, 1200); //catch expire after 10 minute
-  return null;
+  obj = JSON.stringify(obj, undefined, 1);
+  dataobj.DataTable.setValue(obj);
+
+  return statuss.Col1.setValue("photo");
 }

@@ -1,7 +1,7 @@
 function Profile(id, msg_id) {
-  var table = Table();
-  var row = table.UserTable.createTextFinder(id).findNext().getRow();
-  var table = table.DataTable;
+  var api = Api(id);
+  var row = api.Row;
+  var table = api.DataTable;
   var idData = table.getCell(row, 4).getValue();
   var atmData = table.getCell(row, 2).getValue();
   var otherData = table.getCell(row, 3).getValue();
@@ -23,17 +23,18 @@ function Profile(id, msg_id) {
     Inline().profile
   );
 
-  return null;
+  return api.ManagerTable.getCell(row, 2).setValue(msg_id);
 }
 
 // Deleting Data From Profile
-function DeleteData(id, msg_id) {
-  var table = Table();
-  var row = table.UserTable.createTextFinder(id).findNext().getRow();
+function DeleteData(id) {
+  const data = Status(id);
+  const row = data.Row;
+  const msg_id = data.Col2.getValue();
 
-  table.DataTable.getCell(row, 2).clear();
-  table.DataTable.getCell(row, 3).clear();
-  table.DataTable.getCell(row, 4).clear();
+  data.DataTable.getCell(row, 2).clear();
+  data.DataTable.getCell(row, 3).clear();
+  data.DataTable.getCell(row, 4).clear();
   Profile(id, msg_id);
   return null;
 }

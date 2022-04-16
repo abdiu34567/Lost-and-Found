@@ -63,7 +63,7 @@ function Inline() {
         [
           {
             text: "🛒 OTHER",
-            callback_data: "ITEM",
+            callback_data: "OTHER",
           },
         ],
         [
@@ -130,10 +130,6 @@ function Inline() {
           {
             text: "🤖 BOT",
             url: "https://t.me/lococompanybot",
-          },
-          {
-            text: "🔎 Search Here",
-            switch_inline_query_current_chat: "",
           },
         ],
       ],
