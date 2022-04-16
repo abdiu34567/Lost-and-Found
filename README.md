@@ -12,14 +12,14 @@ Search for @lococompanybot
 ## Features
 
 ```Javascript
-# The Bot uses Catch Storage to store Temporary data
-# User Friendly Registration of any Items
-# Searching Items in a great Capacity
+# The Bot Uses Catch Storage To Store Temporary Data
+# User Friendly Registration Of Any Items
+# Searching Items In Great Capacity
 ```
 
 ## version
 
-```bash
+```Javascript
 # Latest
 # v1.0.1
 ```
