@@ -43,9 +43,5 @@ function MyInline(contents) {
     }
   }
 
-  try {
-    return Bot.answerInlineQuery(inline.QueryId, data, `Type Something...`);
-  } catch (err) {
-    Bot.sendText(id, err);
-  }
+  return Bot.answerInlineQuery(inline.QueryId, data, `Type Something...`);
 }
