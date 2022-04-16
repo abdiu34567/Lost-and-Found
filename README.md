@@ -13,7 +13,7 @@ Search for @lococompanybot
 
 ```Javascript
 # Directly Calls From Database EveryTime
-# No Catch/Session stored
+# No Catch or Session Stored
 # Searching Items in a great Capacity
 ```
 
