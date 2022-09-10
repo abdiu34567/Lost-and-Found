@@ -2,7 +2,7 @@
 
 ⭐️ Lost and Found is Telegram Bot created for the purpose of Lost Items in my university
 
-## Usage+
+## Usage
 
 ```javascript
 Open Telegram Web/ Desktop
