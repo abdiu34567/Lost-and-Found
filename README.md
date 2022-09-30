@@ -12,7 +12,7 @@ Search for @lococompanybot
 ## Features
 
 ```Javascript
-# The Bot Uses Catch Storage To Store Temporary Data
+# The Bot Uses Cache Storage To Store Temporary Data
 # User Friendly Registration Of Any Items
 # Searching Items In Great Capacity
 ```
